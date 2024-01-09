@@ -3,19 +3,13 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { postNewAdmin } from "../../helpers/axiosHelper/users/userAxios";
 const SignUp = () => {
   const [form, setForm] = useState({});
   const [passwordValidationError, setPasswordValidationError] = useState("");
 
   const handelOnChange = (e) => {
     const { name, value } = e.target;
-
-    //password rule
-    //1. must be longer than 6 chars
-    //2. must inclue uppercase
-    //3. must inclue lowercase
-    //4. must inclue special characters
-    //5. must inclue number
 
     setPasswordValidationError("");
     if (name === "password") {
@@ -38,12 +32,22 @@ const SignUp = () => {
     setForm({ ...form, [name]: value });
   };
 
-  const handelOnSubmit = (e) => {
+  const handelOnSubmit = async (e) => {
     e.preventDefault();
     const { confirmPassword, ...rest } = form;
     if (confirmPassword !== rest.password) {
       toast.error("Password do not match ");
+      return;
     }
+    const userPending = postNewAdmin(rest);
+
+    toast.promise(userPending, {
+      pending: "Please wait...",
+    });
+
+    const { status, message } = await userPending;
+    console.log(status, message);
+    toast[status](message);
   };
 
   const input = [
@@ -77,14 +81,14 @@ const SignUp = () => {
     },
     {
       label: "Password",
-      name: "pasword",
+      name: "password",
       type: "password",
       required: true,
       placeholder: "Enter password",
     },
     {
       label: "Confirm Password",
-      name: "confirmPasword",
+      name: "confirmPassword",
       type: "password",
       required: true,
       placeholder: "Enter confirm password",
@@ -93,7 +97,9 @@ const SignUp = () => {
 
   return (
     <div>
-      <div className="text-center">Tech Gare Admin CMS</div>
+      <div className="mt-5 text-center ">
+        <h1> Tech Gare Admin CMS</h1>
+      </div>
       <hr />
       <Form
         className="m-auto border rounded shadow-lg p-3 mt-5"
