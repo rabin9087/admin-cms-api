@@ -26,7 +26,7 @@ const SignUp = () => {
 
     if (name === "confirmPasword") {
       form.password !== value &&
-        setPasswordValidationError("Password do not match");
+        setPasswordValidationError("Password does not match");
     }
 
     setForm({ ...form, [name]: value });
@@ -36,7 +36,7 @@ const SignUp = () => {
     e.preventDefault();
     const { confirmPassword, ...rest } = form;
     if (confirmPassword !== rest.password) {
-      toast.error("Password do not match ");
+      toast.error("Password does not match ");
       return;
     }
     const userPending = postNewAdmin(rest);
@@ -98,7 +98,7 @@ const SignUp = () => {
   return (
     <div>
       <div className="mt-5 text-center ">
-        <h1> Tech Gare Admin CMS</h1>
+        <h1> Tech Gear Admin CMS</h1>
       </div>
       <hr />
       <Form

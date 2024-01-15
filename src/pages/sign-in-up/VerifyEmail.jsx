@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
 import { useSearchParams } from "react-router-dom";
-import { postverifyEmail } from "../../helpers/axiosHelper/users/userAxios";
+import { postVerifyEmail } from "../../helpers/axiosHelper/users/userAxios";
 
 //show spinner
 //grab query strings from url
@@ -24,7 +24,7 @@ const VerifyEmail = () => {
   }, []);
 
   const userEmailVerification = async () => {
-    const response = await postverifyEmail({ associate, token });
+    const response = await postVerifyEmail({ associate, token });
     console.log(response);
     setShowSpinner(false);
     setResp(response);
@@ -45,6 +45,8 @@ const VerifyEmail = () => {
       >
         {resp.message}
       </Alert>
+
+      {resp.status === "success" && <a href="/">Login</a>}
     </div>
   );
 };
