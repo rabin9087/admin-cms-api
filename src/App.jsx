@@ -14,8 +14,16 @@ import AdminUser from "./pages/admin-user/AdminUser";
 import MyProfile from "./pages/myProfile/MyProfile";
 import PrivateRouter from "./components/private-router/PrivateRouter";
 import ResetPassword from "./pages/sign-in-up/ResetPassword";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getAllCategoriesAction } from "./pages/category/categoryAction";
 
 function App() {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getAllCategoriesAction())
+  }, [dispatch])
   return (
     <div>
       <Routes>
