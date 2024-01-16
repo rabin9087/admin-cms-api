@@ -82,6 +82,10 @@ const SignIn = () => {
         <div className="d-grid">
           <Button type="submit">Sign In</Button>
         </div>
+
+        <div className="mt-4 text-end">
+          <a href="/reset-password"> Forget Password?</a>
+        </div>
       </Form>
     </div>
   );

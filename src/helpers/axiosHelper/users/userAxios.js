@@ -55,3 +55,21 @@ export const logOutUser = (_id) => {
     })
 }
 
+export const requestOTP = (email) => {
+    return apiProcesser({
+        method: 'post',
+        url: userAPI + "/request-otp",
+        data: {
+            email
+        }
+    })
+}
+
+export const requestPassword = (data) => {
+    return apiProcesser({
+        method: 'patch',
+        url: userAPI,
+        data
+    })
+}
+
