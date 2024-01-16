@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 import { useRef, useState } from "react";
 import { toast } from "react-toastify";
-import { requestOTP, requestPassword } from "../../helpers/axiosHelper/users/userAxios";
+import { requestOTP, resetPassword } from "../../helpers/axiosHelper/users/userAxios";
 import { useNavigate } from "react-router-dom";
 
 const initialState = {
@@ -57,7 +57,7 @@ const ResetPassword = () => {
     }
     //call api and send data
 
-    const pending = requestPassword(rest)
+    const pending = resetPassword(rest)
     toast.promise(pending, {
       pending: "Please wait..."
     } )
