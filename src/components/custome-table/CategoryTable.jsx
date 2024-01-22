@@ -1,9 +1,17 @@
+import { useEffect } from "react";
 import { Button } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllCategoriesAction } from "../../pages/category/categoryAction";
 
 const CategoryTable = () => {
+  const dispatch= useDispatch()
   const { catList } = useSelector((state) => state.catInfo);
+
+  useEffect(() => {
+    dispatch(getAllCategoriesAction())
+  }, [dispatch])
+
   return (
     <Table striped>
       <thead>

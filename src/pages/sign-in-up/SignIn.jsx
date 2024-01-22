@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { postSignIn } from "../../helpers/axiosHelper/users/userAxios";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getUserProfile } from "../profile/userAction";
+import { autoLogin, getUserProfile } from "../profile/userAction";
 const SignIn = () => {
   const emailRef = useRef("");
   const passwordRef = useRef("");
@@ -16,8 +16,9 @@ const SignIn = () => {
   const { admin } = useSelector((state) => state.userInfo);
   useEffect(() => {
     // check if user in redux store, if so, redirect to dashboard
-    admin?._id && navigate("/dashboard");
-  }, [admin?._id, navigate]);
+    admin?._id && navigate("/dashboard")
+    dispatch(autoLogin());
+  }, [admin?._id, navigate, dispatch]);
 
   //get email and passeword from the form using uncontrolled input field
 

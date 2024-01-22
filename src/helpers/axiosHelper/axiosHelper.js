@@ -22,7 +22,6 @@ export const apiProcesser = async ({ method, url, data, isPrivate, refreshToken 
             data,
             headers
         })
-        console.log(resp.data)
         return resp.data
 
     } catch (error) {

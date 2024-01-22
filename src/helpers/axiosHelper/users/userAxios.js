@@ -68,7 +68,7 @@ export const requestOTP = (email) => {
 export const resetPassword = (data) => {
     return apiProcesser({
         method: 'patch',
-        url: userAPI,
+        url: userAPI,   
         data
     })
 }

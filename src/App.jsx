@@ -17,6 +17,7 @@ import ResetPassword from "./pages/sign-in-up/ResetPassword";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getAllCategoriesAction } from "./pages/category/categoryAction";
+import NewProduct from "./pages/product/NewProduct";
 
 function App() {
   const dispatch = useDispatch()
@@ -106,7 +107,21 @@ function App() {
             </PrivateRouter>
           }
         ></Route>
+
+<Route
+          path="/product/new"
+          element={
+            <PrivateRouter>
+              <NewProduct />
+            </PrivateRouter>
+          }
+        ></Route>
+
+        <Route path="*" element ={<h1>404 Page Not Fround </h1>}></Route>
+        
       </Routes>
+          
+      /product/new
       <ToastContainer />
     </div>
   );

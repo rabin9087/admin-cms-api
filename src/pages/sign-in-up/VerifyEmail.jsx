@@ -25,7 +25,6 @@ const VerifyEmail = () => {
 
   const userEmailVerification = async () => {
     const response = await postVerifyEmail({ associate, token });
-    console.log(response);
     setShowSpinner(false);
     setResp(response);
   };
