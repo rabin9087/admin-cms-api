@@ -40,7 +40,7 @@ export const featchNewAccessJWT = () => {
         method: 'get',
         url: userAPI + "/get-accessjwt",
         isPrivate: true,
-        refreshToken: true
+        refreshToken: true,
     })
 }
 
@@ -68,7 +68,7 @@ export const requestOTP = (email) => {
 export const resetPassword = (data) => {
     return apiProcesser({
         method: 'patch',
-        url: userAPI,   
+        url: userAPI,
         data
     })
 }

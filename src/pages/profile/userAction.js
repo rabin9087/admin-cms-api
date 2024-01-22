@@ -17,7 +17,6 @@ export const autoLogin = () => async (dispatch) => {
     const refreshJWT = localStorage.getItem("refreshJWT")
     if (refreshJWT) {
         const token = await featchNewAccessJWT()
-        console.log(token)
         if (token?.accessJWT) {
             sessionStorage.setItem('accessJWT', token.accessJWT)
             dispatch(getUserProfile())
