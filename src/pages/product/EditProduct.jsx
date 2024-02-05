@@ -5,12 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getAllCategoriesAction } from "../category/categoryAction";
 import { getAProductsAction, updatedAProductAction } from "./productAction";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const EditProduct = () => {
   const [form, setForm] = useState({});
   const [images, setImages] = useState([]);
   const [imgToDelete, setImgToDelete] = useState([]);
+  const navigate = useNavigate();
 
   const { _id } = useParams();
 
@@ -42,7 +43,7 @@ const EditProduct = () => {
 
     imgToDelete.length && formDt.append("imgToDelete", imgToDelete);
 
-    dispatch(updatedAProductAction(_id, formDt));
+    dispatch(updatedAProductAction(_id, formDt)) &&  navigate("/product")
   };
 
   const handelOnChange = (e) => {
@@ -110,7 +111,6 @@ const EditProduct = () => {
       label: "Sales Price",
       name: "salesPrice",
       type: "number",
-      required: true,
       placeholder: "Enter sales Price",
       value: form.salesPrice,
     },
@@ -200,8 +200,9 @@ const EditProduct = () => {
               </div>
               <img
                 className="img-thumbnail"
-                width={"200px"}
-                src={import.meta.env.VITE_SERVER_ROOT + url}
+                width={"100px"}
+                height={"100px"}
+                src={url}
               />
             </div>
           ))}

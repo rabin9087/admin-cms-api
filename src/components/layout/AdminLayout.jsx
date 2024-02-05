@@ -1,29 +1,28 @@
-import { Footer } from "./Footer"
+import { Footer } from "./Footer";
 // import { Header } from "./Header"
-import {Container} from 'react-bootstrap'
-import { Sidebar } from "./Sidebar"
-import { Header } from "./Header"
+import { Container } from "react-bootstrap";
+import { Sidebar } from "./Sidebar";
+import { Header } from "./Header";
 
-export const AdminLayout = ({title, children}) => {
+export const AdminLayout = ({ title, children }) => {
   return (
     <div className="admin-layout">
-      <Sidebar/>
+      <Sidebar />
       <main className="main">
-
-    <Header/>
-
+        <Header />
         <Container>
-            <div className="mt-3">
-                <h3>{title}</h3>
-                <hr/>
-                <div className="page-contain">{children}</div>
-            </div>
+          <div className="mt-3">
+            <h3>{title}</h3>
+            <hr />
+            <div className="page-contain">{children}</div>
+          </div>
         </Container>
-
-        <Footer/>
+        <div className="footer">
+          <Footer />
+        </div>
       </main>
     </div>
-  )
-}
+  );
+};
 
-export default AdminLayout
+export default AdminLayout;

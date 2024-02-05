@@ -22,10 +22,10 @@ export const postAProductAction = (data) => async (dispatch) => {
     toast.promise(pending, {
         pending: " Please wait"
     })
-    const {status, message} = await pending
+    const { status, message } = await pending
     toast[status](message)
     if (status === "success") {
-        dispatch(getAllProductsAction())
+         dispatch(getAllProductsAction())
     }
 }
 
@@ -34,7 +34,7 @@ export const updatedAProductAction = (_id, data) => async (dispatch) => {
     toast.promise(pending, {
         pending: " Please wait"
     })
-    const {status, message} = await pending
+    const { status, message } = await pending
     toast[status](message)
     if (status === "success") {
         dispatch(getAProductsAction(_id))

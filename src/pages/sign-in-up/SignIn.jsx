@@ -14,9 +14,10 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   const { admin } = useSelector((state) => state.userInfo);
+
   useEffect(() => {
     // check if user in redux store, if so, redirect to dashboard
-    admin?._id && navigate("/dashboard")
+    admin?._id && navigate("/dashboard");
     dispatch(autoLogin());
   }, [admin?._id, navigate, dispatch]);
 

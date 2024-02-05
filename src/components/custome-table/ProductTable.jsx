@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 const ProductTable = () => {
   const dispatch = useDispatch();
   const { productList } = useSelector((state) => state.productInfo);
- 
+
   useEffect(() => {
     dispatch(getAllProductsAction());
   }, [dispatch]);
@@ -40,10 +40,7 @@ const ProductTable = () => {
               <tr key={_id}>
                 <td>{i + 1}.</td>
                 <td>
-                  <img
-                    width={"100px"}
-                    src={import.meta.env.VITE_SERVER_ROOT + thumbnail}
-                  />
+                  <img width={"100px"} src={thumbnail} />
                 </td>
                 <td
                   className={
@@ -59,7 +56,7 @@ const ProductTable = () => {
                 <td>{price}</td>
                 <td>{salesPrice}</td>
 
-                <td className="d-grid">
+                <td className="flex">
                   <Link to={`/product/edit/${_id}`}>
                     <Button variant="warning">Edit</Button>
                   </Link>

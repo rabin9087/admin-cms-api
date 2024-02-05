@@ -1,10 +1,10 @@
 .main {
-    min-height: 83vh;
+    min-height: 100vh;
     background: rgba(205, 225, 255, 0.729);
   }
   
   .admin-layout {
-    display: flex;
+    display: inline-flex;
   }
   .admin-layout .side-bar {
     width: 230px;
@@ -12,6 +12,7 @@
     height: 100vh;
   }
   .admin-layout .main {
+    min-height: 100vh;
     margin-left: 230px;
     width: calc(100vw - 230px);
   }

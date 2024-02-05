@@ -5,11 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getAllCategoriesAction } from "../category/categoryAction";
 import { postAProductAction } from "./productAction";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const NewProduct = () => {
   const [form, setForm] = useState({});
   const [images, setImages] = useState([]);
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const { catList } = useSelector((state) => state.catInfo);
@@ -20,7 +21,6 @@ const NewProduct = () => {
 
   const handelOnSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target.name, e.target.value)
     const formDt = new FormData();
 
     for (let key in form) {
@@ -32,7 +32,7 @@ const NewProduct = () => {
         formDt.append("images", item);
       });
     }
-    dispatch(postAProductAction(formDt));
+    dispatch(postAProductAction(formDt)) && navigate("/product");
   };
 
   const handelOnChange = (e) => {
@@ -76,7 +76,6 @@ const NewProduct = () => {
       label: "Sales Price",
       name: "salesPrice",
       type: "number",
-      required: true,
       placeholder: "Enter sales Price",
     },
     {

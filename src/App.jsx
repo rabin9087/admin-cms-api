@@ -1,6 +1,5 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
 import SignUp from "./pages/sign-in-up/SignUp";
 import SignIn from "./pages/sign-in-up/SignIn";
 import VerifyEmail from "./pages/sign-in-up/VerifyEmail";
@@ -21,11 +20,11 @@ import NewProduct from "./pages/product/NewProduct";
 import EditProduct from "./pages/product/EditProduct";
 
 function App() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAllCategoriesAction())
-  }, [dispatch])
+    dispatch(getAllCategoriesAction());
+  }, [dispatch]);
   return (
     <div>
       <Routes>
@@ -109,7 +108,7 @@ function App() {
           }
         ></Route>
 
-<Route
+        <Route
           path="/product/new"
           element={
             <PrivateRouter>
@@ -126,12 +125,8 @@ function App() {
           }
         ></Route>
 
-        <Route path="*" element ={<h1>404 Page Not Fround </h1>}></Route>
-        
+        <Route path="*" element={<h1>404 Page Not Fround </h1>}></Route>
       </Routes>
-          
-      /product/new
-      <ToastContainer />
     </div>
   );
 }

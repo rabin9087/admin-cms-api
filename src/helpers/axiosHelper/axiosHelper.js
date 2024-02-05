@@ -16,7 +16,6 @@ export const apiProcesser = async ({ method, url, data, isPrivate, refreshToken 
         const headers = {
             Authorization: isPrivate ? token : null
         }
-        console.log(headers)
         const resp = await axios({
             method,
             url,
