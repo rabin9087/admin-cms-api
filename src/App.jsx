@@ -37,9 +37,9 @@ function App() {
         <Route
           path="/admin-signup"
           element={
-            // <PrivateRouter>
+            <PrivateRouter>
               <SignUp />
-            // </PrivateRouter>
+            </PrivateRouter>
           }
         ></Route>
         <Route
