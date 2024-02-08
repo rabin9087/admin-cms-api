@@ -10,7 +10,6 @@ export const getAllProductsAction = () => async (dispatch) => {
 }
 
 export const getAProductsAction = (_id) => async (dispatch) => {
-    console.log(_id)
     const { status, products } = await fetchAllProducts(_id)
     if (status === "success") {
         dispatch(setSelectedProduct(products))
