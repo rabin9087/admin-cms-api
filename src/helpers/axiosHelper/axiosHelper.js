@@ -9,7 +9,7 @@ export const getRefreshJWT = () => {
     return localStorage.getItem("refreshJWT")
 }
 
-export const rootAPI = import.meta.env.VITE_SERVER_ROOT + "/api/v1"
+export const rootAPI = import.meta.env.VITE_ROOT_API + "/api/v1"
 export const apiProcesser = async ({ method, url, data, isPrivate, refreshToken }) => {
     try {
         const token = refreshToken ? getRefreshJWT() : getAccessJWT()
@@ -30,10 +30,10 @@ export const apiProcesser = async ({ method, url, data, isPrivate, refreshToken 
         if (error.response?.data?.message.includes("jwt expired")) {
             const { accessJWT } = await featchNewAccessJWT()
 
-        if (accessJWT) {
-            sessionStorage.setItem("accessJWT", accessJWT)
-            return apiProcesser({ method, url, data, isPrivate, refreshToken })
-        }
+            if (accessJWT) {
+                sessionStorage.setItem("accessJWT", accessJWT)
+                return apiProcesser({ method, url, data, isPrivate, refreshToken })
+            }
         }
         return {
             status: "error",

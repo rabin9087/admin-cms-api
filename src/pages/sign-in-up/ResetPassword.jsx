@@ -13,7 +13,7 @@ const initialState = {
   confirmPassword: ""
 }
 
-const ResetPassword = () => {
+const    ResetPassword = () => {
   const emailRef = useRef("");
   const navigate = useNavigate()
 
