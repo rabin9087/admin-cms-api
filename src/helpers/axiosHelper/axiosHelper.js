@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { featchNewAccessJWT } from './users/userAxios'
-import { EBurl } from '../../env/dev/constants'
 
 export const getAccessJWT = () => {
     return sessionStorage.getItem("accessJWT")
