@@ -28,11 +28,13 @@ const NewProduct = () => {
     }
 
     if (images.length) {
-      [...images].forEach((item) => {
+      [...images].forEach(async (item) => {
+        // await convertBase64(item)
         formDt.append("images", item);
       });
     }
-    dispatch(postAProductAction(formDt)) && navigate("/product");
+    dispatch(postAProductAction(formDt));
+    //  && navigate("/product");
   };
 
   const handelOnChange = (e) => {
@@ -40,10 +42,11 @@ const NewProduct = () => {
     setForm({ ...form, [name]: value });
   };
 
-  const handelOnImageAttach = (e) => {
+  const handelOnImageAttach = async (e) => {
     const { files } = e.target;
     setImages(files);
   };
+ 
 
   const input = [
     {
