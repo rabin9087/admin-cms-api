@@ -100,6 +100,14 @@ const EditProduct = () => {
       value: form.qty,
     },
     {
+      label: "Size",
+      name: "sizes",
+      type: "text",
+      required: true,
+      placeholder: "Enter All Product sizes",
+      value: form.sizes,
+    },
+    {
       label: "Price",
       name: "price",
       type: "number",
@@ -199,10 +207,10 @@ const EditProduct = () => {
                 <label htmlFor={url + 1}>Delete</label>
               </div>
               <img
-                className="img-thumbnail"
-                width={"100px"}
+                className="thumbnail"
+                width={"80px"}
                 height={"100px"}
-                src={url}
+                src={import.meta.env.VITE_SERVER_ROOT+url}
               />
             </div>
           ))}

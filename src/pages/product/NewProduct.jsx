@@ -69,6 +69,13 @@ const NewProduct = () => {
       placeholder: "Enter Qunatity of Product",
     },
     {
+      label: "Size",
+      name: "sizes",
+      type: "text",
+      required: true,
+      placeholder: "Enter All Product sizes",
+    },
+    {
       label: "Price",
       name: "price",
       type: "number",

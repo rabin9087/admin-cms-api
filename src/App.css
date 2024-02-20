@@ -34,3 +34,7 @@
     padding: 1rem;
     border-radius: 10px;
   }
+
+  .thumbnail:hover{
+    opacity: 0.75
+  }

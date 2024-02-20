@@ -41,8 +41,10 @@ const ProductTable = () => {
                 <td>{i + 1}.</td>
                 <td>
                   <img
-                    width={"100px"}
+                    width={"80px"}
+                    height={"100px"}
                     src={import.meta.env.VITE_SERVER_ROOT+ thumbnail}
+                    className="thumbnail"
                   />
                 </td>
                 <td
