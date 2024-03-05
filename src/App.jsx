@@ -18,6 +18,7 @@ import { useDispatch } from "react-redux";
 import { getAllCategoriesAction } from "./pages/category/categoryAction";
 import NewProduct from "./pages/product/NewProduct";
 import EditProduct from "./pages/product/EditProduct";
+import ViewOrderTable from "./pages/order/ViewOrderTable";
 
 function App() {
   const dispatch = useDispatch();
@@ -76,7 +77,7 @@ function App() {
           }
         ></Route>
         <Route
-          path="/order"
+          path="/orders"
           element={
             <PrivateRouter>
               <Order />
@@ -121,6 +122,15 @@ function App() {
           element={
             <PrivateRouter>
               <EditProduct />
+            </PrivateRouter>
+          }
+        ></Route>
+
+<Route
+          path="/orders/:_id"
+          element={
+            <PrivateRouter>
+              <ViewOrderTable />
             </PrivateRouter>
           }
         ></Route>

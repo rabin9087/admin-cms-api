@@ -12,6 +12,7 @@ export const getRefreshJWT = () => {
 export const rootAPI = import.meta.env.VITE_ROOT_API + "/api/v1"
 // export const rootAPI = EBurl + "/api/v1"
 export const apiProcesser = async ({ method, url, data, isPrivate, refreshToken }) => {
+    
     try {
         const token = refreshToken ? getRefreshJWT() : getAccessJWT()
         const headers = {
@@ -23,12 +24,11 @@ export const apiProcesser = async ({ method, url, data, isPrivate, refreshToken 
             data,
             headers
         })
-
         return resp.data
 
     } catch (error) {
-        console.log(error)
-        if (error.response?.data?.message.includes("jwt expired")) {
+        
+        if (error.response?.data?.message?.includes("jwt expired")) {
             const { accessJWT } = await featchNewAccessJWT()
 
             if (accessJWT) {
