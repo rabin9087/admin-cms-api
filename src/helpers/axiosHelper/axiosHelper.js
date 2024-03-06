@@ -12,7 +12,6 @@ export const getRefreshJWT = () => {
 export const rootAPI = import.meta.env.VITE_ROOT_API + "/api/v1"
 // export const rootAPI = EBurl + "/api/v1"
 export const apiProcesser = async ({ method, url, data, isPrivate, refreshToken }) => {
-    
     try {
         const token = refreshToken ? getRefreshJWT() : getAccessJWT()
         const headers = {

@@ -4,13 +4,35 @@ import { getAOrderAction } from "./orderAction";
 import { Link, useParams } from "react-router-dom";
 import { Button, Table } from "react-bootstrap";
 import AdminLayout from "../../components/layout/AdminLayout";
+
+import { openModal } from "../../store/modal.slice";
+
 const ViewOrderTable = () => {
   const dispatch = useDispatch();
   const { _id } = useParams();
+  const orderID = _id;
   const { order } = useSelector((state) => state.orderInfo);
-  console.log(order);
-
   const { items, address } = order;
+  const handelOnDelivery = (orderID, updatingData) => {
+    const newData = items.map((item) => {
+      const { _id, ...rest } = item;
+      const deliveryStatus =
+        rest.deliveryStatus === "Delivered" ? "Not Delivered Yet" : "Delivered";
+      if (_id._id === updatingData._id) {
+        return { ...rest, deliveryStatus, _id: _id._id };
+      }
+      return { ...rest, _id: _id._id };
+    });
+    dispatch(
+      openModal({
+        heading: "Update",
+        content: "Are you sure want to update this order?",
+        data: newData,
+        id: orderID,
+      })
+    );
+  };
+
   useEffect(() => {
     dispatch(getAOrderAction(_id));
   }, [dispatch, _id]);
@@ -57,19 +79,14 @@ const ViewOrderTable = () => {
               (
                 {
                   _id,
-                  thumbnail,
-                  name,
-                  slug,
-                  sku,
-                  price,
+
                   orderQty,
-                  qty,
                   size,
-                  sizes,
+                  deliveryStatus,
                 },
                 i
               ) => (
-                <tr key={_id}>
+                <tr key={_id._id}>
                   <td>{i + 1}.</td>
 
                   <td>
@@ -77,30 +94,39 @@ const ViewOrderTable = () => {
                     <img
                       width={"60px"}
                       height={"70px"}
-                      src={import.meta.env.VITE_SERVER_ROOT + thumbnail}
+                      src={import.meta.env.VITE_SERVER_ROOT + _id.thumbnail}
                       className="thumbnail"
                     />
                   </td>
-                  <td>{name}</td>
-                  <td>{slug} </td>
-                  <td>{sku} </td>
-                  <td>{price}</td>
+                  <td>{_id.name}</td>
+                  <td>{_id.slug} </td>
+                  <td>{_id.sku} </td>
+                  <td>{_id.price}</td>
                   <td>{orderQty}</td>
-                  <td>{qty}</td>
+                  <td>{_id.qty}</td>
                   <td>{size}</td>
 
-                  <td>
+                  <td className="">
                     &#91;
-                    {sizes?.map((item, i) => (
-                      <span key={i}>{item}, </span>
+                    {_id.sizes?.map((item, i) => (
+                      <span key={i} className="">
+                        {item},{" "}
+                      </span>
                     ))}
                     &#93;
                   </td>
 
                   <td className="flex">
-                    <Link to={`/orders/${_id}`}>
-                      <Button variant="danger">  Deliver</Button>
-                    </Link>
+                    <Button
+                      variant={
+                        deliveryStatus === "Not Delivered Yet"
+                          ? "danger"
+                          : "success"
+                      }
+                      onClick={() => handelOnDelivery(orderID, _id)}
+                    >
+                      {deliveryStatus}
+                    </Button>
                   </td>
                 </tr>
               )

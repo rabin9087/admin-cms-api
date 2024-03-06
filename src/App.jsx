@@ -19,6 +19,7 @@ import { getAllCategoriesAction } from "./pages/category/categoryAction";
 import NewProduct from "./pages/product/NewProduct";
 import EditProduct from "./pages/product/EditProduct";
 import ViewOrderTable from "./pages/order/ViewOrderTable";
+import CustomModal from "./components/bootstrap-modal/Modal";
 
 function App() {
   const dispatch = useDispatch();
@@ -126,7 +127,7 @@ function App() {
           }
         ></Route>
 
-<Route
+        <Route
           path="/orders/:_id"
           element={
             <PrivateRouter>
@@ -137,6 +138,7 @@ function App() {
 
         <Route path="*" element={<h1>404 Page Not Fround </h1>}></Route>
       </Routes>
+      <CustomModal />
     </div>
   );
 }
