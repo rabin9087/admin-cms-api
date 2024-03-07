@@ -26,7 +26,7 @@ export const apiProcesser = async ({ method, url, data, isPrivate, refreshToken 
         return resp.data
 
     } catch (error) {
-        
+
         if (error.response?.data?.message?.includes("jwt expired")) {
             const { accessJWT } = await featchNewAccessJWT()
 

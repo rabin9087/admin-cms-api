@@ -1,21 +1,27 @@
 import { useEffect } from "react";
-import { Button } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProductsAction } from "../../pages/product/productAction";
+import {
+  fetchAllCategoriesByparentCatId,
+  getAllProductsAction,
+} from "../../pages/product/productAction";
 import { Link } from "react-router-dom";
+import Button from "react-bootstrap/Button";
 
-const ProductTable = () => {
+const ProductTable = ({ catId }) => {
   const dispatch = useDispatch();
   const { productList } = useSelector((state) => state.productInfo);
 
   useEffect(() => {
-    dispatch(getAllProductsAction());
-  }, [dispatch]);
+    catId === "All"
+      ? dispatch(getAllProductsAction())
+      : dispatch(fetchAllCategoriesByparentCatId(catId));
+  }, [dispatch, catId]);
 
   return (
     <>
       <div>{productList.length} Products found!</div>
+
       <Table striped>
         <thead>
           <tr>
@@ -43,7 +49,7 @@ const ProductTable = () => {
                   <img
                     width={"80px"}
                     height={"100px"}
-                    src={import.meta.env.VITE_SERVER_ROOT+ thumbnail}
+                    src={import.meta.env.VITE_SERVER_ROOT + thumbnail}
                     className="thumbnail"
                   />
                 </td>

@@ -4,7 +4,8 @@ const initialState = {
     show: false,
     heading: '', content: '',
     data: [],
-    id: ''
+    id: '',
+
 }
 
 const modalSlice = createSlice({
@@ -17,6 +18,7 @@ const modalSlice = createSlice({
             state.content = payload.content
             state.data = payload.data
             state.id = payload.id
+
         },
         closeModal: (state) => {
             state.show = false

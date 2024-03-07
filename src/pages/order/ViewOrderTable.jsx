@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getAOrderAction } from "./orderAction";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { Button, Table } from "react-bootstrap";
 import AdminLayout from "../../components/layout/AdminLayout";
 
@@ -9,11 +9,13 @@ import { openModal } from "../../store/modal.slice";
 
 const ViewOrderTable = () => {
   const dispatch = useDispatch();
+
   const { _id } = useParams();
   const orderID = _id;
   const { order } = useSelector((state) => state.orderInfo);
   const { items, address } = order;
-  const handelOnDelivery = (orderID, updatingData) => {
+
+  const handelOnDelivery = async (orderID, updatingData) => {
     const newData = items.map((item) => {
       const { _id, ...rest } = item;
       const deliveryStatus =
@@ -23,6 +25,9 @@ const ViewOrderTable = () => {
       }
       return { ...rest, _id: _id._id };
     });
+
+    // const filter = items.filter((item) => item.deliveryStatus === "Delivered");
+
     dispatch(
       openModal({
         heading: "Update",
@@ -35,12 +40,13 @@ const ViewOrderTable = () => {
 
   useEffect(() => {
     dispatch(getAOrderAction(_id));
-  }, [dispatch, _id]);
+  }, [_id, dispatch]);
   return (
     <AdminLayout title={"Product Details "}>
       <Link to={"/orders"}>
         <Button variant="secondary"> &lt; Back</Button>
       </Link>
+
       <div className="mt-2">
         <div className="mb-4">
           Customer Details
@@ -119,9 +125,7 @@ const ViewOrderTable = () => {
                   <td className="flex">
                     <Button
                       variant={
-                        deliveryStatus === "Not Delivered Yet"
-                          ? "danger"
-                          : "success"
+                        deliveryStatus === "Delivered" ? "success" : "danger"
                       }
                       onClick={() => handelOnDelivery(orderID, _id)}
                     >

@@ -16,6 +16,6 @@ export const postNewCategoryAction = (data) => async (dispatch) => {
         pending: "Please wait..."
     })
     const { status, message } = await pending
-  toast[status](message)
-  status=== "success" && dispatch(getAllCategoriesAction())
+    toast[status](message)
+    status === "success" && dispatch(getAllCategoriesAction())
 }

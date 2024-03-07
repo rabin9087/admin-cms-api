@@ -5,7 +5,7 @@ const productAPI = rootAPI + '/products';
 export const fetchAllProducts = (_id) => {
     return apiProcesser({
         method: 'get',
-        url: _id ? productAPI +"/" + _id : productAPI,
+        url: _id ? productAPI + "/" + _id : productAPI,
         isPrivate: true
     })
 }
@@ -19,6 +19,14 @@ export const postNewProduct = (data) => {
     })
 }
 
+export const fetchProductsByparentCatId = (data) => {
+    return apiProcesser({
+        method: 'get',
+        url: productAPI + "/parentCatId/" + data,
+        isPrivate: true,
+    })
+}
+
 export const updateAProduct = (data) => {
     return apiProcesser({
         method: 'put',
@@ -26,5 +34,5 @@ export const updateAProduct = (data) => {
         data,
         isPrivate: true
     })
-   
+
 }

@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 import { toast } from "react-toastify";
 import { postSignIn } from "../../helpers/axiosHelper/users/userAxios";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { autoLogin, getUserProfile } from "../profile/userAction";
 import Screenshare from "../category/Screenshare";
 const SignIn = () => {
@@ -13,14 +13,16 @@ const SignIn = () => {
   const passwordRef = useRef("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const location = useLocation();
+  const fromLocation =
+    location?.state?.from?.location?.pathname || "/dashboard";
   const { admin } = useSelector((state) => state.userInfo);
 
   useEffect(() => {
     // check if user in redux store, if so, redirect to dashboard
-    admin?._id && navigate("/dashboard");
+    admin?._id && navigate(fromLocation);
     dispatch(autoLogin());
-  }, [admin?._id, navigate, dispatch]);
+  }, [admin?._id, navigate, dispatch, fromLocation]);
 
   //get email and passeword from the form using uncontrolled input field
 
@@ -90,7 +92,7 @@ const SignIn = () => {
           <a href="/reset-password"> Forget Password?</a>
         </div>
       </Form>
-     {/* <Screenshare/> */}
+      {/* <Screenshare/> */}
     </div>
   );
 };

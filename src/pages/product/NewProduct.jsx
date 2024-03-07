@@ -11,7 +11,7 @@ const NewProduct = () => {
   const [form, setForm] = useState({});
   const [images, setImages] = useState([]);
   const navigate = useNavigate();
-
+  const formDt = new FormData();
   const dispatch = useDispatch();
   const { catList } = useSelector((state) => state.catInfo);
 
@@ -21,15 +21,13 @@ const NewProduct = () => {
 
   const handelOnSubmit = (e) => {
     e.preventDefault();
-    const formDt = new FormData();
 
     for (let key in form) {
       formDt.append(key, form[key]);
     }
 
     if (images.length) {
-      [...images].forEach(async (item) => {
-        // await convertBase64(item)
+      [...images].forEach((item) => {
         formDt.append("images", item);
       });
     }
@@ -46,7 +44,6 @@ const NewProduct = () => {
     const { files } = e.target;
     setImages(files);
   };
- 
 
   const input = [
     {

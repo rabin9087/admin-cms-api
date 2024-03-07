@@ -1,16 +1,37 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getAllOrderAction } from "./orderAction";
 import { FaCheck } from "react-icons/fa";
 import { ImCross } from "react-icons/im";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button, Table } from "react-bootstrap";
+import { updateDeliveryStatus } from "../../helpers/axiosHelper/order/OrderAxios";
 const OrderTable = () => {
   const dispatch = useDispatch();
   const { orderList } = useSelector((state) => state.orderInfo);
   useEffect(() => {
     dispatch(getAllOrderAction());
   }, [dispatch]);
+
+  useEffect(() => {
+    const updateDelivery = async () => {
+      orderList.map(async ({ _id, items }) => {
+        const filter = items.filter(
+          (item) => item.deliveryStatus === "Delivered"
+        );
+        if (filter.length === items.length) {
+          await updateDeliveryStatus(_id, { deliveryStatus: "Delivered" });
+        } else {
+          await updateDeliveryStatus(_id, {
+            deliveryStatus: "Not Delivered Yet",
+          });
+        }
+        return;
+      });
+    };
+    updateDelivery();
+  }, [orderList]);
+
   return (
     <div>
       <Table striped>
@@ -69,7 +90,33 @@ const OrderTable = () => {
                 >
                   {deliveryStatus}
                 </td>
-                <td>{items.length}</td>
+                <td>
+                  Delivered:{" "}
+                  <span className=" bg-success ps-2 pe-2 rounded">
+                    {" "}
+                    {
+                      items.filter(
+                        (item) => item.deliveryStatus === "Delivered"
+                      ).length
+                    }{" "}
+                  </span>
+                  <br />
+                  Not Delivered:{" "}
+                  <span className="bg-danger ps-2 pe-2 rounded">
+                    {
+                      items.filter(
+                        (item) => item.deliveryStatus === "Not Delivered Yet"
+                      ).length
+                    }
+                  </span>
+                  <br />
+                  Total:{" "}
+                  <span className="bg-warning ps-2 pe-2 rounded">
+                    {" "}
+                    {items.length}
+                  </span>
+                  <br />
+                </td>
                 <td
                   className={
                     pay.status === "succeeded" ? "text-success" : "text-danger"
@@ -77,7 +124,7 @@ const OrderTable = () => {
                 >
                   {pay.status === "succeeded" ? "Paid" : "Not Paid"}
                 </td>
-                <td className="flex">
+                <td className="flex justify-content-center align-items-center">
                   <Link to={`/orders/${_id}`}>
                     <Button
                       variant={
@@ -91,10 +138,12 @@ const OrderTable = () => {
                 </td>
                 <td
                   className={
-                    deliveryStatus === "Delivered" ? "flex text-center text-align-center bg-success" : "flex text-center bg-danger"
-                   }
+                    deliveryStatus === "Delivered"
+                      ? "flex text-center justify-content-center align-items-center text-success"
+                      : "flex text-center justify-content-center align-items-center text-danger"
+                  }
                 >
-                  {deliveryStatus === "Delivered" ?  <FaCheck /> : <ImCross />}
+                  {deliveryStatus === "Delivered" ? <FaCheck /> : <ImCross />}
                 </td>
               </tr>
             )
