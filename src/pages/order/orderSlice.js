@@ -16,9 +16,34 @@ const orderSlice = createSlice({
     SetAOrder: (state, { payload }) => {
       state.order = payload;
     },
+
+    updateDispatchedOrder: (state, { payload }) => {
+      const { items, ...rest } = state.order;
+
+      // Map over items and update dispatchedQty if _id matches
+      const updatedItems = items.map(item => {
+        if (item._id._id === payload._id) {
+          return {
+            ...item,
+            dispatchedQty: payload.dispatchedQty
+          };
+        }
+        return item;
+      });
+
+      // Return the updated state
+      return {
+        ...state,
+        order: {
+          ...rest,
+          items: updatedItems
+        }
+      };
+    }
   },
 });
 
+
 const { actions, reducer } = orderSlice;
-export const { SetAOrder, SetAllOrders } = actions;
+export const { SetAOrder, SetAllOrders, updateDispatchedOrder } = actions;
 export default reducer;

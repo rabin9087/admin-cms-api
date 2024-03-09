@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getAOrderAction } from "./orderAction";
-import { Link, useLocation, useParams } from "react-router-dom";
-import { Button, Table } from "react-bootstrap";
+import { Link, useParams } from "react-router-dom";
+import { Button, Col, Container, Row, Table } from "react-bootstrap";
 import AdminLayout from "../../components/layout/AdminLayout";
 
 import { openModal } from "../../store/modal.slice";
+import { updateDispatchedOrder } from "./orderSlice";
 
 const ViewOrderTable = () => {
   const dispatch = useDispatch();
@@ -13,7 +14,7 @@ const ViewOrderTable = () => {
   const { _id } = useParams();
   const orderID = _id;
   const { order } = useSelector((state) => state.orderInfo);
-  const { items, address } = order;
+  const { items, address, amount, pay, ...rest } = order;
 
   const handelOnDelivery = async (orderID, updatingData) => {
     const newData = items.map((item) => {
@@ -26,8 +27,6 @@ const ViewOrderTable = () => {
       return { ...rest, _id: _id._id };
     });
 
-    // const filter = items.filter((item) => item.deliveryStatus === "Delivered");
-
     dispatch(
       openModal({
         heading: "Update",
@@ -36,6 +35,20 @@ const ViewOrderTable = () => {
         id: orderID,
       })
     );
+  };
+  const decrement = (dispatchedNumber, _id) => {
+    const dispatchedQty = dispatchedNumber - 1;
+    if (dispatchedQty >= 0) {
+      dispatch(updateDispatchedOrder({ _id, dispatchedQty }));
+    }
+  };
+
+  const increment = (dispatchedNumber, _id, orderQty) => {
+    const dispatchedQty = dispatchedNumber + 1;
+
+    if (dispatchedQty <= orderQty) {
+      dispatch(updateDispatchedOrder({ _id, dispatchedQty }));
+    }
   };
 
   useEffect(() => {
@@ -47,23 +60,42 @@ const ViewOrderTable = () => {
         <Button variant="secondary"> &lt; Back</Button>
       </Link>
 
-      <div className="mt-2">
-        <div className="mb-4">
-          Customer Details
-          <div>
-            <span>Name: {address?.name}</span> <br />
-            <span>Email: {address?.email}</span>
-            <br />
-            <span>
-              Address:{" "}
-              {address?.address?.line2 ? address?.address?.line2 + "/" : ""}
-              {address?.address?.line1}, {address?.address?.city},
-              {address?.address?.state} {address?.address?.postal_code},{" "}
-              {address?.address?.country}
-            </span>{" "}
-            <br />
-          </div>
-        </div>
+      <div className="mt-2 ">
+        <Container fluid className="mb-4">
+          <Row>
+            <Col>
+              <div>
+                <h3>Customer Details </h3>
+                <div>
+                  <span>Name: {address?.name}</span> <br />
+                  <span>Email: {address?.email}</span>
+                  <br />
+                  <span>Phone: {address?.phone}</span>
+                  <br />
+                  <span>
+                    Address:{" "}
+                    {address?.address?.line2
+                      ? address?.address?.line2 + "/"
+                      : ""}
+                    {address?.address?.line1}, {address?.address?.city},
+                    {address?.address?.state} {address?.address?.postal_code},{" "}
+                    {address?.address?.country}
+                  </span>{" "}
+                  <br />
+                </div>
+              </div>
+            </Col>
+            <Col>
+              <div className="">
+                <h4>Amount: ${amount}</h4>
+                <span>Payment Method Type: {pay?.payment_method_types[0]}</span>
+                <br />
+                <span>Order Date: {pay?.createdAt}</span>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+
         <Table striped>
           <thead>
             <tr>
@@ -80,19 +112,10 @@ const ViewOrderTable = () => {
               <th>Delivery Status</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="">
             {items?.map(
-              (
-                {
-                  _id,
-
-                  orderQty,
-                  size,
-                  deliveryStatus,
-                },
-                i
-              ) => (
-                <tr key={_id._id}>
+              ({ _id, dispatchedQty, orderQty, size, deliveryStatus }, i) => (
+                <tr key={_id._id} className="">
                   <td>{i + 1}.</td>
 
                   <td>
@@ -104,15 +127,49 @@ const ViewOrderTable = () => {
                       className="thumbnail"
                     />
                   </td>
-                  <td>{_id.name}</td>
+                  <td> {_id.name}</td>
                   <td>{_id.slug} </td>
                   <td>{_id.sku} </td>
                   <td>{_id.price}</td>
-                  <td>{orderQty}</td>
-                  <td>{_id.qty}</td>
-                  <td>{size}</td>
+                  <td>
+                    <div className="d-flex justify-content-center align-items-center ps-2 pe-2 m-auto text-info rounded-lg">
+                      Ordered: {orderQty}
+                    </div>
 
-                  <td className="">
+                    <div className="d-flex justify-content-center align-items-center gap-2 mt-2 mb-2">
+                      <Button
+                        onClick={() => decrement(dispatchedQty, _id._id)}
+                        type="button"
+                      >
+                        {" "}
+                        -{" "}
+                      </Button>
+                      <div className="block">Supplied: </div>
+                      <div className="d-flex">
+                        <span>{dispatchedQty}</span>
+                      </div>
+
+                      <Button
+                        onClick={() =>
+                          increment(dispatchedQty, _id._id, orderQty)
+                        }
+                        type="button"
+                      >
+                        {" "}
+                        +{" "}
+                      </Button>
+                    </div>
+                  </td>
+                  <td>
+                    <div className="d-flex justify-content-center">
+                      {_id.qty}
+                    </div>
+                  </td>
+                  <td>
+                    <div className="d-flex text-warning ">{size}</div>
+                  </td>
+
+                  <td className="p-2">
                     &#91;
                     {_id.sizes?.map((item, i) => (
                       <span key={i} className="">
@@ -122,15 +179,17 @@ const ViewOrderTable = () => {
                     &#93;
                   </td>
 
-                  <td className="flex">
-                    <Button
-                      variant={
-                        deliveryStatus === "Delivered" ? "success" : "danger"
-                      }
-                      onClick={() => handelOnDelivery(orderID, _id)}
-                    >
-                      {deliveryStatus}
-                    </Button>
+                  <td className="">
+                    <div className=" d-flex justify-content-center align-items-center gap-2 mt-3 mb-2">
+                      <Button
+                        variant={
+                          deliveryStatus === "Delivered" ? "success" : "danger"
+                        }
+                        onClick={() => handelOnDelivery(orderID, _id)}
+                      >
+                        {deliveryStatus}
+                      </Button>
+                    </div>
                   </td>
                 </tr>
               )
