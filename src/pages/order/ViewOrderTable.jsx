@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { getAOrderAction } from "./orderAction";
 import { Link, useParams } from "react-router-dom";
 import { Button, Col, Container, Row, Table } from "react-bootstrap";
@@ -15,6 +15,8 @@ const ViewOrderTable = () => {
   const orderID = _id;
   const { order } = useSelector((state) => state.orderInfo);
   const { items, address, amount, pay, ...rest } = order;
+  const dateFormate = new Date(rest?.createdAt);
+  const orderedDated = dateFormate.toLocaleString();
 
   const handelOnDelivery = async (orderID, updatingData) => {
     const newData = items.map((item) => {
@@ -90,7 +92,7 @@ const ViewOrderTable = () => {
                 <h4>Amount: ${amount}</h4>
                 <span>Payment Method Type: {pay?.payment_method_types[0]}</span>
                 <br />
-                <span>Order Date: {pay?.createdAt}</span>
+                <span>Order Date: {orderedDated}</span>
               </div>
             </Col>
           </Row>
@@ -144,7 +146,7 @@ const ViewOrderTable = () => {
                         {" "}
                         -{" "}
                       </Button>
-                      <div className="block">Supplied: </div>
+                      <div className="block">Supply: </div>
                       <div className="d-flex">
                         <span>{dispatchedQty}</span>
                       </div>

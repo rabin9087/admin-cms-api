@@ -1,9 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { getAllOrderAction } from "./orderAction";
-import { FaCheck } from "react-icons/fa";
-import { ImCross } from "react-icons/im";
-import { Link, useLocation } from "react-router-dom";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { Link } from "react-router-dom";
 import { Button, Table } from "react-bootstrap";
 import { updateDeliveryStatus } from "../../helpers/axiosHelper/order/OrderAxios";
 const OrderTable = () => {
@@ -49,7 +48,7 @@ const OrderTable = () => {
             <th>Number of Products</th>
             <th>Paid Status</th>
             <th>View Orders</th>
-            <th>Delivered</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody className="">
@@ -136,14 +135,12 @@ const OrderTable = () => {
                     </Button>
                   </Link>
                 </td>
-                <td
-                  className={
-                    deliveryStatus === "Delivered"
-                      ? "flex text-center justify-content-center align-items-center text-success"
-                      : "flex text-center justify-content-center align-items-center text-danger"
-                  }
-                >
-                  {deliveryStatus === "Delivered" ? <FaCheck /> : <ImCross />}
+                <td className="">
+                  <div className="d-flex align-items-center ">
+                    <Button className="text-danger m-2" variant="light">
+                      <RiDeleteBin6Line />
+                    </Button>
+                  </div>
                 </td>
               </tr>
             )

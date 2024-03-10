@@ -20,12 +20,15 @@ import NewProduct from "./pages/product/NewProduct";
 import EditProduct from "./pages/product/EditProduct";
 import ViewOrderTable from "./pages/order/ViewOrderTable";
 import CustomModal from "./components/bootstrap-modal/Modal";
+import { fetchAllCustomersAction } from "./pages/customer/customerAction";
+import EditCategory from "./pages/category/EditCategory";
 
 function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllCategoriesAction());
+    dispatch(fetchAllCustomersAction());
   }, [dispatch]);
   return (
     <div>
@@ -34,7 +37,6 @@ function App() {
         <Route path="/" element={<SignIn />}></Route>
         <Route path="/verify-email" element={<VerifyEmail />}></Route>
         <Route path="/reset-password" element={<ResetPassword />}></Route>
-
         {/* private route */}
         <Route
           path="/admin-signup"
@@ -52,7 +54,6 @@ function App() {
             </PrivateRouter>
           }
         ></Route>
-
         <Route
           path="/category"
           element={
@@ -109,7 +110,6 @@ function App() {
             </PrivateRouter>
           }
         ></Route>
-
         <Route
           path="/product/new"
           element={
@@ -126,7 +126,6 @@ function App() {
             </PrivateRouter>
           }
         ></Route>
-
         <Route
           path="/orders/:_id"
           element={
@@ -135,7 +134,15 @@ function App() {
             </PrivateRouter>
           }
         ></Route>
-
+        <Route
+          path="/category/:_id"
+          element={
+            <PrivateRouter>
+              <EditCategory />
+            </PrivateRouter>
+          }
+        ></Route>
+        category
         <Route path="*" element={<h1>404 Page Not Fround </h1>}></Route>
       </Routes>
       <CustomModal />

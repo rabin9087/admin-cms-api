@@ -1,11 +1,12 @@
-import AdminLayout from "../../components/layout/AdminLayout"
+import AdminLayout from "../../components/layout/AdminLayout";
+import CustomerTable from "./CustomerTable";
 
 const Customer = () => {
   return (
-   <AdminLayout title={"Customer"}>
-    Customer ...
-   </AdminLayout>
-  )
-}
+    <AdminLayout title={"Customers"}>
+      <CustomerTable />
+    </AdminLayout>
+  );
+};
 
-export default Customer
+export default Customer;

@@ -10,6 +10,14 @@ export const fetchCategories = () => {
     })
 }
 
+export const fetchCategoriesById = (_id) => {
+    return apiProcesser({
+        method: 'get',
+        url: categoryAPI + "/" + _id,
+        isPrivate: true,
+    })
+}
+
 export const postCategory = (data) => {
     return apiProcesser({
         method: 'post',
