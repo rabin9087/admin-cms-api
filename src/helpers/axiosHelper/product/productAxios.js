@@ -34,5 +34,13 @@ export const updateAProduct = (data) => {
         data,
         isPrivate: true
     })
+}
 
+export const updateAProductStatus = (data) => {
+    return apiProcesser({
+        method: 'patch',
+        url: productAPI,
+        data,
+        isPrivate: true
+    })
 }

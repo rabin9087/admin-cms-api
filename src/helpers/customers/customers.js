@@ -28,3 +28,12 @@ export const postNewProduct = (data) => {
         isPrivate: true
     })
 }
+
+export const updateCustomerStatus = (data) => {
+    return apiProcesser({
+        method: 'patch',
+        url: customerAPI,
+        data,
+        isPrivate: true
+    })
+}

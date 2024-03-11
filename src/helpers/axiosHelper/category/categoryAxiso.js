@@ -18,6 +18,32 @@ export const fetchCategoriesById = (_id) => {
     })
 }
 
+export const updateCategories = (data) => {
+    return apiProcesser({
+        method: 'put',
+        url: categoryAPI,
+        isPrivate: true,
+        data
+    })
+}
+
+export const updateCategoriesStatus = (data) => {
+    return apiProcesser({
+        method: 'patch',
+        url: categoryAPI,
+        isPrivate: true,
+        data
+    })
+}
+
+export const deleteCategoriesById = (_id) => {
+    return apiProcesser({
+        method: 'delete',
+        url: categoryAPI + "/" + _id,
+        isPrivate: true,
+    })
+}
+
 export const postCategory = (data) => {
     return apiProcesser({
         method: 'post',

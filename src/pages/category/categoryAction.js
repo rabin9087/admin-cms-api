@@ -1,5 +1,5 @@
 import { toast } from "react-toastify"
-import { fetchCategories, fetchCategoriesById, postCategory } from "../../helpers/axiosHelper/category/categoryAxiso"
+import { fetchCategories, fetchCategoriesById, postCategory, updateCategories, updateCategoriesStatus } from "../../helpers/axiosHelper/category/categoryAxiso"
 import { setCatList, setCategory } from "./categorySlice"
 
 export const getAllCategoriesAction = () => async (dispatch) => {
@@ -15,6 +15,22 @@ export const getAllCategoriesByIdAction = (_id) => async (dispatch) => {
         dispatch(setCategory(categories))
     }
 }
+
+export const updateCategoriesAction = (data) => async (dispatch) => {
+    const { status, categories } = await updateCategories(data)
+    if (status === "success") {
+        dispatch(setCategory(categories))
+    }
+}
+
+export const updateCategoriesStatusAction = (data) => async (dispatch) => {
+    const { status } = await updateCategoriesStatus(data)
+    if (status === "success") {
+        dispatch(getAllCategoriesAction())
+    }
+}
+
+
 
 export const postNewCategoryAction = (data) => async (dispatch) => {
 

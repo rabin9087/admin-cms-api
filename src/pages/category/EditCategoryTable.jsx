@@ -1,15 +1,30 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllCategoriesByIdAction } from "./categoryAction";
-import { Button, Form, Table } from "react-bootstrap";
+import {
+  getAllCategoriesAction,
+  getAllCategoriesByIdAction,
+} from "./categoryAction";
+import { Button, Form } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import CustomInput from "../../components/customs/CustomInput";
+import { updateCategories } from "../../helpers/axiosHelper/category/categoryAxiso";
 
 const EditCategoryTable = () => {
   const dispatch = useDispatch();
   const { category } = useSelector((state) => state.catInfo);
   const { _id } = useParams();
   const [form, setForm] = useState(category);
+
+  const handelOnUpdate = async (title) => {
+    console.log(form);
+    if (window.confirm(`Are you sure want to update ${title} category?`)) {
+      await updateCategories(form);
+    }
+  };
+
+  useEffect(() => {
+    dispatch(getAllCategoriesAction(_id));
+  }, [dispatch, _id]);
 
   const input = [
     {
@@ -28,7 +43,11 @@ const EditCategoryTable = () => {
     },
   ];
 
-  const handelOnChange = () => {};
+  const handelOnChange = (e) => {
+    const { name, value } = e.target;
+    console.log(value);
+    setForm({ ...form, [name]: value });
+  };
 
   useEffect(() => {
     dispatch(getAllCategoriesByIdAction(_id));
@@ -44,7 +63,7 @@ const EditCategoryTable = () => {
             <option
               selected={form._id === form.parentCatId}
               key={form._id}
-              value={form.status}
+              value={"active"}
             >
               Active
             </option>
@@ -61,7 +80,7 @@ const EditCategoryTable = () => {
           <CustomInput key={i} {...item} onChange={handelOnChange} />
         ))}
         <div className="d-grid m-4">
-          <Button>Update</Button>
+          <Button onClick={() => handelOnUpdate(form.title)}>Update</Button>
         </div>
       </Form>
     </div>

@@ -1,16 +1,28 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAllCategoriesByparentCatId,
   getAllProductsAction,
+  updateProductStatusAction,
 } from "../../pages/product/productAction";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import { Form } from "react-bootstrap";
 
 const ProductTable = ({ catId }) => {
   const dispatch = useDispatch();
   const { productList } = useSelector((state) => state.productInfo);
+
+  const handelOnStatusUpdate = (e) => {
+    const { value, checked } = e.target;
+    dispatch(
+      updateProductStatusAction({
+        _id: value,
+        status: checked ? "active" : "inactive",
+      })
+    );
+  };
 
   useEffect(() => {
     catId === "All"
@@ -53,12 +65,22 @@ const ProductTable = ({ catId }) => {
                     className="thumbnail"
                   />
                 </td>
+
                 <td
                   className={
                     status === "active" ? "text-success" : "text-danger"
                   }
                 >
-                  {status}
+                  <Form>
+                    <Form.Check // prettier-ignore
+                      type="switch"
+                      id="custom-switch"
+                      value={_id}
+                      label={status}
+                      checked={status === "active"}
+                      onChange={handelOnStatusUpdate}
+                    />
+                  </Form>
                 </td>
                 <td>
                   Name: {name} <br /> Slug: {slug}

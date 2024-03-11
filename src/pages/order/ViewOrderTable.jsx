@@ -15,8 +15,11 @@ const ViewOrderTable = () => {
   const orderID = _id;
   const { order } = useSelector((state) => state.orderInfo);
   const { items, address, amount, pay, ...rest } = order;
-  const dateFormate = new Date(rest?.createdAt);
-  const orderedDated = dateFormate.toLocaleString();
+  const createDate = new Date(rest?.createdAt);
+  const orderedDated = createDate.toLocaleString();
+
+  const updateDate = new Date(rest?.updatedAt);
+  const LastUpdateDated = updateDate.toLocaleString();
 
   const handelOnDelivery = async (orderID, updatingData) => {
     const newData = items.map((item) => {
@@ -90,9 +93,13 @@ const ViewOrderTable = () => {
             <Col>
               <div className="">
                 <h4>Amount: ${amount}</h4>
-                <span>Payment Method Type: {pay?.payment_method_types[0]}</span>
+                <span>
+                  Payment Method Type:{" "}
+                  {pay === "cash" ? pay : pay?.payment_method_types[0]}
+                </span>
                 <br />
-                <span>Order Date: {orderedDated}</span>
+                <span>Order Date: {orderedDated}</span> <br />
+                <span>Update Date: {LastUpdateDated}</span>
               </div>
             </Col>
           </Row>
@@ -108,7 +115,7 @@ const ViewOrderTable = () => {
               <th>SKU</th>
               <th>Price/Item</th>
               <th>Ordered Quantity</th>
-              <th>Items On Stock</th>
+              <th>Stock</th>
               <th>Size</th>
               <th>Size Available</th>
               <th>Delivery Status</th>

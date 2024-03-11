@@ -1,4 +1,4 @@
-import { fetchAllAdmins, fetchAllCustomers } from "../../helpers/customers/customers"
+import { fetchAllAdmins, fetchAllCustomers, updateCustomerStatus } from "../../helpers/customers/customers"
 import { SetOrderNumberByUser } from "../order/orderSlice"
 import { setCustomerList } from "./customerSlice"
 
@@ -8,6 +8,14 @@ export const fetchAllCustomersAction = () => async (dispatch) => {
     if (status === "success") {
         dispatch(setCustomerList(customers))
         dispatch(SetOrderNumberByUser(orders))
+    }
+}
+
+export const UpdateUserStatusAction = (data) => async (dispatch) => {
+    const { status } = await updateCustomerStatus(data)
+    if (status === "success") {
+        dispatch(fetchAllCustomersAction())
+
     }
 }
 

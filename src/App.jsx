@@ -142,7 +142,7 @@ function App() {
             </PrivateRouter>
           }
         ></Route>
-        category
+
         <Route path="*" element={<h1>404 Page Not Fround </h1>}></Route>
       </Routes>
       <CustomModal />

@@ -2,12 +2,25 @@ import { useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import { Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllCustomersAction } from "./customerAction";
+import {
+  UpdateUserStatusAction,
+  fetchAllCustomersAction,
+} from "./customerAction";
 
 const CustomerTable = () => {
   const dispatch = useDispatch();
   const { customerList } = useSelector((state) => state.customerInfo);
   const { numberOfOrder } = useSelector((state) => state.orderInfo);
+
+  const handelOnStatusUpdate = (e) => {
+    const { value, checked } = e.target;
+    dispatch(
+      UpdateUserStatusAction({
+        _id: value,
+        status: checked ? "active" : "inactive",
+      })
+    );
+  };
   useEffect(() => {
     dispatch(fetchAllCustomersAction());
   }, [dispatch]);
@@ -18,7 +31,6 @@ const CustomerTable = () => {
         <thead>
           <tr>
             <th>S.N.</th>
-            <th>Change Status</th>
             <th>Status</th>
             <th>Role</th>
             <th>Name</th>
@@ -35,22 +47,22 @@ const CustomerTable = () => {
                 return (
                   <tr key={_id} className="">
                     <td>{i + 1}.</td>
-                    <td>
-                      <Form className="">
-                        <Form.Check // prettier-ignore
-                          type="switch"
-                          id="custom-switch"
-                          label={status === "active" ? "InActive" : "Active"}
-                        />
-                      </Form>
-                    </td>
 
                     <td
                       className={
                         status === "active" ? "text-success" : "text-danger"
                       }
                     >
-                      {status}
+                      <Form>
+                        <Form.Check // prettier-ignore
+                          type="switch"
+                          id="custom-switch"
+                          value={_id}
+                          label={status}
+                          checked={status === "active"}
+                          onChange={handelOnStatusUpdate}
+                        />
+                      </Form>
                     </td>
                     <td>{role}</td>
                     <td>

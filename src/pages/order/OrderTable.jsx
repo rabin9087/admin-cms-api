@@ -71,6 +71,7 @@ const OrderTable = () => {
                 <td>
                   <span>Name:</span> {address?.name} <br />
                   Email: {address?.email} <br />
+                  Phone: {address?.phone} <br />
                 </td>
                 <td>
                   {address?.address?.line2 ? address?.address?.line2 + "/" : ""}
