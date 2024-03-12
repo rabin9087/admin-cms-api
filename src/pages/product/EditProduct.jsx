@@ -210,7 +210,7 @@ const EditProduct = () => {
                 className="thumbnail"
                 width={"80px"}
                 height={"100px"}
-                src={url}
+                src={import.meta.env.VITE_SERVER_ROOT + url}
               />
             </div>
           ))}
