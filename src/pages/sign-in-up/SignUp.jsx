@@ -98,7 +98,7 @@ const SignUp = () => {
   return (
     <div>
       <div className="mt-5 text-center ">
-        <h1> Tech Gear Admin CMS</h1>
+        <h1> Cricket Gear Admin CMS</h1>
       </div>
       <hr />
       <Form

@@ -31,7 +31,7 @@ const VerifyEmail = () => {
 
   return (
     <div>
-      <div className="text-center">Tech Gare Admin CMS</div>
+      <div className="text-center">Cricket Gear Admin CMS</div>
       <hr />
 
       <div className="text-center mt-5">

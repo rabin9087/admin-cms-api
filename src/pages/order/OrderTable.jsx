@@ -90,32 +90,28 @@ const OrderTable = () => {
                 >
                   {deliveryStatus}
                 </td>
-                <td>
-                  Delivered:{" "}
-                  <span className=" bg-success ps-2 pe-2 rounded">
-                    {" "}
+                <td className="">
+                  <span className="d-flex justify-content-between text-success ps-2 pe-2 rounded">
+                    <span>Delivered: </span>
                     {
                       items.filter(
                         (item) => item.deliveryStatus === "Delivered"
                       ).length
                     }{" "}
                   </span>
-                  <br />
-                  Not Delivered:{" "}
-                  <span className="bg-danger ps-2 pe-2 rounded">
+                  <span className="d-flex justify-content-between text-danger ps-2 pe-2 rounded">
+                    <span>Not Delivered: </span>
                     {
                       items.filter(
                         (item) => item.deliveryStatus === "Not Delivered Yet"
                       ).length
                     }
                   </span>
-                  <br />
-                  Total:{" "}
-                  <span className="bg-warning ps-2 pe-2 rounded">
-                    {" "}
+
+                  <span className="d-flex justify-content-between text-info ps-2 pe-2 rounded">
+                    <span> Total:</span>
                     {items.length}
                   </span>
-                  <br />
                 </td>
                 <td
                   className={

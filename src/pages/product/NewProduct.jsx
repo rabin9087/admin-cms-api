@@ -10,8 +10,9 @@ import { Link, useNavigate } from "react-router-dom";
 const NewProduct = () => {
   const [form, setForm] = useState({});
   const [images, setImages] = useState([]);
+  const [loader, setLoader] = useState(false);
   const navigate = useNavigate();
-  const formDt = new FormData();
+
   const dispatch = useDispatch();
   const { catList } = useSelector((state) => state.catInfo);
 
@@ -21,7 +22,8 @@ const NewProduct = () => {
 
   const handelOnSubmit = (e) => {
     e.preventDefault();
-
+    const formDt = new FormData();
+    setLoader(false);
     for (let key in form) {
       formDt.append(key, form[key]);
     }
@@ -32,6 +34,7 @@ const NewProduct = () => {
       });
     }
     dispatch(postAProductAction(formDt));
+    setLoader(false);
     //  && navigate("/product");
   };
 
@@ -150,7 +153,9 @@ const NewProduct = () => {
           />
         </Form.Group>
         <div className="d-grid">
-          <Button type="submit">Add Product</Button>
+          <Button type="submit" className={loader ? "spinner" : ""}>
+            {loader ? <div className="spinner"></div> : "Add product"}
+          </Button>
         </div>
       </Form>
     </AdminLayout>
