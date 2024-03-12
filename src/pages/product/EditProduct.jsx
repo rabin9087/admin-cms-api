@@ -43,7 +43,7 @@ const EditProduct = () => {
 
     imgToDelete.length && formDt.append("imgToDelete", imgToDelete);
 
-    dispatch(updatedAProductAction(_id, formDt)) &&  navigate("/product")
+    dispatch(updatedAProductAction(_id, formDt)) && navigate("/product");
   };
 
   const handelOnChange = (e) => {
@@ -210,7 +210,7 @@ const EditProduct = () => {
                 className="thumbnail"
                 width={"80px"}
                 height={"100px"}
-                src={import.meta.env.VITE_SERVER_ROOT+url}
+                src={url}
               />
             </div>
           ))}

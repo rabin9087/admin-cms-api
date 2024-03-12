@@ -132,7 +132,8 @@ const ViewOrderTable = () => {
                     <img
                       width={"60px"}
                       height={"70px"}
-                      src={import.meta.env.VITE_SERVER_ROOT + _id.thumbnail}
+                      // src={import.meta.env.VITE_SERVER_ROOT + _id.thumbnail}
+                      src={import.meta.env.VITE_SERVER_ROOT + _id.url}
                       className="thumbnail"
                     />
                   </td>

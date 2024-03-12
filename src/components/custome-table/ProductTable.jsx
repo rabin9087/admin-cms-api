@@ -61,7 +61,8 @@ const ProductTable = ({ catId }) => {
                   <img
                     width={"80px"}
                     height={"100px"}
-                    src={import.meta.env.VITE_SERVER_ROOT + thumbnail}
+                    // src={import.meta.env.VITE_ROOT_API + thumbnail}
+                    src={thumbnail}
                     className="thumbnail"
                   />
                 </td>

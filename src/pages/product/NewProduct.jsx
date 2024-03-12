@@ -23,11 +23,10 @@ const NewProduct = () => {
   const handelOnSubmit = (e) => {
     e.preventDefault();
     const formDt = new FormData();
-    setLoader(false);
+    setLoader(true);
     for (let key in form) {
       formDt.append(key, form[key]);
     }
-
     if (images.length) {
       [...images].forEach((item) => {
         formDt.append("images", item);
@@ -35,7 +34,7 @@ const NewProduct = () => {
     }
     dispatch(postAProductAction(formDt));
     setLoader(false);
-    //  && navigate("/product");
+    return navigate("/product");
   };
 
   const handelOnChange = (e) => {
@@ -45,6 +44,7 @@ const NewProduct = () => {
 
   const handelOnImageAttach = async (e) => {
     const { files } = e.target;
+
     setImages(files);
   };
 

@@ -10,11 +10,11 @@ export const fetchAllProducts = (_id) => {
     })
 }
 
-export const postNewProduct = (data) => {
+export const postNewProduct = (formData) => {
     return apiProcesser({
         method: 'post',
         url: productAPI,
-        data,
+        data: formData,
         isPrivate: true
     })
 }
