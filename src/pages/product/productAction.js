@@ -1,11 +1,13 @@
 import { toast } from "react-toastify"
 import { fetchAllProducts, fetchProductsByparentCatId, postNewProduct, updateAProduct, updateAProductStatus } from "../../helpers/axiosHelper/product/productAxios"
-import { setProductList, setSelectedProduct } from "./productSlice"
+import { setProductList, setSelectedProduct, setProductLength } from "./productSlice"
 
-export const getAllProductsAction = () => async (dispatch) => {
-    const { status, products } = await fetchAllProducts()
+export const getAllProductsAction = (data) => async (dispatch) => {
+
+    const { status, products, productLength } = await fetchAllProducts(data)
     if (status === "success") {
         dispatch(setProductList(products))
+        dispatch(setProductLength(productLength))
     }
 }
 
@@ -53,7 +55,7 @@ export const updatedAProductAction = (_id, data) => async (dispatch) => {
     }
 }
 
-export const fetchAllCategoriesByparentCatId = (data) => async (dispatch) => {
+export const fetchAllProductsByCatId = (data) => async (dispatch) => {
     const pending = fetchProductsByparentCatId(data)
     toast.promise(pending, {
         pending: "Please wait..."

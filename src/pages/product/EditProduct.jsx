@@ -34,7 +34,7 @@ const EditProduct = () => {
     for (let key in rest) {
       formDt.append(key, rest[key]);
     }
-
+    console.log(images);
     if (images.length) {
       [...images].forEach((item) => {
         formDt.append("newImages", item);
@@ -43,7 +43,8 @@ const EditProduct = () => {
 
     imgToDelete.length && formDt.append("imgToDelete", imgToDelete);
 
-    dispatch(updatedAProductAction(_id, formDt)) && navigate("/product");
+    dispatch(updatedAProductAction(_id, formDt));
+    // && navigate("/product");
   };
 
   const handelOnChange = (e) => {
@@ -210,12 +211,24 @@ const EditProduct = () => {
                 className="thumbnail"
                 width={"80px"}
                 height={"100px"}
-                src={import.meta.env.VITE_SERVER_ROOT + url}
+                src={url}
               />
             </div>
           ))}
         </div>
-
+        {/* 
+        {images?.length > 0 &&
+          images.map((item, i) => (
+            <div key={i}>
+              <img
+                className="thumbnail"
+                width={"80px"}
+                height={"100px"}
+                src={item}
+              />
+            </div>
+          ))}
+ */}
         <Form.Group className="mb-3">
           <Form.Control
             type="file"

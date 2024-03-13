@@ -12,6 +12,7 @@ const ViewOrderTable = () => {
   const dispatch = useDispatch();
 
   const { _id } = useParams();
+  console.log(_id);
   const orderID = _id;
   const { order } = useSelector((state) => state.orderInfo);
   const { items, address, amount, pay, ...rest } = order;

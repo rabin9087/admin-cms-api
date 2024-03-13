@@ -1,18 +1,20 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  fetchAllCategoriesByparentCatId,
+  fetchAllProductsByCatId,
   getAllProductsAction,
   updateProductStatusAction,
 } from "../../pages/product/productAction";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import { Form } from "react-bootstrap";
+import CustomPagination from "../pagination/CustomPagination";
 
 const ProductTable = ({ catId }) => {
   const dispatch = useDispatch();
-  const { productList } = useSelector((state) => state.productInfo);
+  const [pageNumber, setPageNumber] = useState(1);
+  const { productList, length } = useSelector((state) => state.productInfo);
 
   const handelOnStatusUpdate = (e) => {
     const { value, checked } = e.target;
@@ -26,12 +28,12 @@ const ProductTable = ({ catId }) => {
 
   useEffect(() => {
     catId === "All"
-      ? dispatch(getAllProductsAction())
-      : dispatch(fetchAllCategoriesByparentCatId(catId));
-  }, [dispatch, catId]);
+      ? dispatch(getAllProductsAction({ number: (pageNumber - 1) * 5 }))
+      : dispatch(fetchAllProductsByCatId({ catId, number: pageNumber * 5 }));
+  }, [dispatch, catId, pageNumber]);
 
   return (
-    <>
+    <div className="productTable">
       <div>{productList.length} Products found!</div>
 
       <Table striped>
@@ -56,7 +58,7 @@ const ProductTable = ({ catId }) => {
               i
             ) => (
               <tr key={_id}>
-                <td>{i + 1}.</td>
+                <td>{i + 1 + (pageNumber - 1) * 5}.</td>
                 <td>
                   <img
                     width={"80px"}
@@ -87,8 +89,8 @@ const ProductTable = ({ catId }) => {
                   Name: {name} <br /> Slug: {slug}
                 </td>
                 <td>{qty}</td>
-                <td>{price}</td>
-                <td>{salesPrice}</td>
+                <td>${price}</td>
+                <td>{salesPrice > 0 ? salesPrice : "Not in Sale"}</td>
 
                 <td className="flex">
                   <Link to={`/product/edit/${_id}`}>
@@ -100,7 +102,14 @@ const ProductTable = ({ catId }) => {
           )}
         </tbody>
       </Table>
-    </>
+      <div className="d-flex justify-items-center justify-content-center">
+        <CustomPagination
+          pageNumber={pageNumber}
+          setPageNumber={setPageNumber}
+          lastPage={Math.ceil(length / 5)}
+        />
+      </div>
+    </div>
   );
 };
 

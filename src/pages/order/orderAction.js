@@ -1,8 +1,8 @@
 import { fetchAllOrders } from "../../helpers/axiosHelper/order/OrderAxios"
 import { SetAOrder, SetAllOrders } from "./orderSlice"
 
-export const getAllOrderAction = () => async (dispatch) => {
-    const { orders, status } = await fetchAllOrders()
+export const getAllOrderAction = (data) => async (dispatch) => {
+    const { orders, status } = await fetchAllOrders(data)
     if (status === 'success') {
         dispatch(SetAllOrders(orders))
     }

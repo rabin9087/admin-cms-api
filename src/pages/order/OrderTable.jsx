@@ -1,35 +1,37 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getAllOrderAction } from "./orderAction";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import { Button, Table } from "react-bootstrap";
-import { updateDeliveryStatus } from "../../helpers/axiosHelper/order/OrderAxios";
+import CustomPagination from "../../components/pagination/CustomPagination";
 const OrderTable = () => {
   const dispatch = useDispatch();
+  const [pageNumber, setPageNumber] = useState(1);
   const { orderList } = useSelector((state) => state.orderInfo);
   useEffect(() => {
-    dispatch(getAllOrderAction());
-  }, [dispatch]);
+    dispatch(getAllOrderAction({ number: (pageNumber - 1) * 5 }));
+  }, [dispatch, pageNumber]);
 
-  useEffect(() => {
-    const updateDelivery = async () => {
-      orderList.map(async ({ _id, items }) => {
-        const filter = items.filter(
-          (item) => item.deliveryStatus === "Delivered"
-        );
-        if (filter.length === items.length) {
-          await updateDeliveryStatus(_id, { deliveryStatus: "Delivered" });
-        } else {
-          await updateDeliveryStatus(_id, {
-            deliveryStatus: "Not Delivered Yet",
-          });
-        }
-        return;
-      });
-    };
-    updateDelivery();
-  }, [orderList]);
+  // useEffect(() => {
+  //   const updateDelivery = async () => {
+  //     orderList.map(async ({ _id, items }) => {
+
+  //       const filter = items.filter(
+  //         (item) => item.deliveryStatus === "Delivered"
+  //       );
+  //       if (filter.length === items.length) {
+  //         await updateDeliveryStatus(_id, { deliveryStatus: "Delivered" });
+  //       } else {
+  //         await updateDeliveryStatus(_id, {
+  //           deliveryStatus: "Not Delivered Yet",
+  //         });
+  //       }
+  //       return;
+  //     });
+  //   };
+  //   updateDelivery();
+  // }, [orderList]);
 
   return (
     <div>
@@ -144,6 +146,13 @@ const OrderTable = () => {
           )}
         </tbody>
       </Table>
+      <div className="d-flex justify-items-center justify-content-center">
+        <CustomPagination
+          pageNumber={pageNumber}
+          setPageNumber={setPageNumber}
+          lastPage={Math.ceil(length / 5)}
+        />
+      </div>
     </div>
   );
 };

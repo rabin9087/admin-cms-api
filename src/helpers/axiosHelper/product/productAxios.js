@@ -2,11 +2,13 @@ import { apiProcesser, rootAPI } from "../axiosHelper";
 
 const productAPI = rootAPI + '/products';
 
-export const fetchAllProducts = (_id) => {
+export const fetchAllProducts = (data) => {
+
     return apiProcesser({
         method: 'get',
-        url: _id ? productAPI + "/" + _id : productAPI,
-        isPrivate: true
+        url: data?._id ? productAPI + "/" + data._id : productAPI + "/" + data?.number,
+        isPrivate: true,
+        data
     })
 }
 
@@ -22,8 +24,9 @@ export const postNewProduct = (formData) => {
 export const fetchProductsByparentCatId = (data) => {
     return apiProcesser({
         method: 'get',
-        url: productAPI + "/parentCatId/" + data,
+        url: productAPI + "/parentCatId/" + data.catId,
         isPrivate: true,
+        data
     })
 }
 

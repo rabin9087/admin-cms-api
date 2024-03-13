@@ -9,7 +9,6 @@ const Product = () => {
   const { catList } = useSelector((state) => state.catInfo);
   const [catId, setCatId] = useState("All");
 
-  useEffect(() => {}, []);
   return (
     <AdminLayout title={"Product"}>
       <div className="text-end mt-4">

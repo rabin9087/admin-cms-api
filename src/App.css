@@ -3,6 +3,20 @@
     background: rgba(205, 225, 255, 0.729);
   }
   
+  /* .footer{
+    background-color: red;
+    padding-top: 4px;
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+  } */
+
+  .product-list{
+    overflow: scroll;
+    margin-bottom: 4px;
+  }
+  
+  
   .admin-layout {
     display: inline-flex;
   }
@@ -38,3 +52,4 @@
   .thumbnail:hover{
     opacity: 0.75
   }
+
