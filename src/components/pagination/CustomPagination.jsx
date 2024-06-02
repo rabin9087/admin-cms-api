@@ -1,5 +1,11 @@
 import { Pagination } from "react-bootstrap";
+import PropTypes from "prop-types";
 const CustomPagination = ({ pageNumber, setPageNumber, lastPage }) => {
+  CustomPagination.propTypes = {
+    pageNumber: PropTypes.number,
+    setPageNumber: PropTypes.func,
+    lastPage: PropTypes.number,
+  };
   const handelOnClick = (number) => {
     console.log("pageNumber", pageNumber);
     console.log("lastPage", lastPage);

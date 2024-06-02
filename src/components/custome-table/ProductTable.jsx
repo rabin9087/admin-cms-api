@@ -92,9 +92,11 @@ const ProductTable = ({ catId }) => {
                 <td>${price}</td>
                 <td>{salesPrice > 0 ? salesPrice : "Not in Sale"}</td>
 
-                <td className="flex">
+                <td className="">
                   <Link to={`/product/edit/${_id}`}>
-                    <Button variant="warning">Edit</Button>
+                    <Button variant="warning" className="h-100">
+                      Edit
+                    </Button>
                   </Link>
                 </td>
               </tr>

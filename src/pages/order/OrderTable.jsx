@@ -1,37 +1,23 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getAllOrderAction } from "./orderAction";
-import { RiDeleteBin6Line } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import { Button, Table } from "react-bootstrap";
 import CustomPagination from "../../components/pagination/CustomPagination";
 const OrderTable = () => {
   const dispatch = useDispatch();
   const [pageNumber, setPageNumber] = useState(1);
-  const { orderList } = useSelector((state) => state.orderInfo);
+  const { orderList, length } = useSelector((state) => state.orderInfo);
   useEffect(() => {
     dispatch(getAllOrderAction({ number: (pageNumber - 1) * 5 }));
   }, [dispatch, pageNumber]);
 
-  // useEffect(() => {
-  //   const updateDelivery = async () => {
-  //     orderList.map(async ({ _id, items }) => {
-
-  //       const filter = items.filter(
-  //         (item) => item.deliveryStatus === "Delivered"
-  //       );
-  //       if (filter.length === items.length) {
-  //         await updateDeliveryStatus(_id, { deliveryStatus: "Delivered" });
-  //       } else {
-  //         await updateDeliveryStatus(_id, {
-  //           deliveryStatus: "Not Delivered Yet",
-  //         });
-  //       }
-  //       return;
-  //     });
-  //   };
-  //   updateDelivery();
-  // }, [orderList]);
+  const orderStatus = [
+    { status: "Received", value: "received" },
+    { status: "Processing", value: "processing" },
+    { status: "On The Way", value: "on the way" },
+    { status: "Delivered", value: "delivered" },
+  ];
 
   return (
     <div>
@@ -40,17 +26,17 @@ const OrderTable = () => {
           <tr>
             <th>S.N.</th>
             {/* <th>Status</th> */}
-            <th>Customer Details</th>
+            <th>Customer_Details</th>
             <th>Street</th>
             <th>Suburb</th>
-            <th>Post Code</th>
+            <th>Post_Code</th>
             <th>State</th>
             <th>Country</th>
-            <th>Delivered status</th>
-            <th>Number of Products</th>
-            <th>Paid Status</th>
-            <th>View Orders</th>
-            <th>Delete</th>
+            <th>Delivered_status</th>
+            <th>Number_of_Products</th>
+            <th>Paid_Status</th>
+            <th>View_Orders</th>
+            <th>Order_Status</th>
           </tr>
         </thead>
         <tbody className="">
@@ -68,7 +54,7 @@ const OrderTable = () => {
               i
             ) => (
               <tr key={_id}>
-                <td>{i + 1}.</td>
+                <td>{i + 1 + (pageNumber - 1) * 5}.</td>
 
                 <td>
                   <span>Name:</span> {address?.name} <br />
@@ -122,7 +108,7 @@ const OrderTable = () => {
                 >
                   {pay.status === "succeeded" ? "Paid" : "Not Paid"}
                 </td>
-                <td className="flex justify-content-center align-items-center">
+                <td className="">
                   <Link to={`/orders/${_id}`}>
                     <Button
                       variant={
@@ -135,10 +121,18 @@ const OrderTable = () => {
                   </Link>
                 </td>
                 <td className="">
-                  <div className="d-flex align-items-center ">
-                    <Button className="text-danger m-2" variant="light">
+                  <div className="d-flex align-items-center text-dark">
+                    <select className="w-2/3 md:w-1/4 py-2 px-2.5 rounded-md mt-2 font-medium md:text-xl text-sm">
+                      {orderStatus.map(({ status, value }, i) => (
+                        <option key={i} className="py-2 px-2" value={value}>
+                          {status}
+                        </option>
+                      ))}
+                    </select>
+
+                    {/* <Button className="text-danger m-2" variant="light">
                       <RiDeleteBin6Line />
-                    </Button>
+                    </Button> */}
                   </div>
                 </td>
               </tr>
