@@ -22,7 +22,7 @@ export const postSignIn = (data) => {
     return apiProcesser({
         method: 'post',
         url: userAPI + "/signIn",
-        data,
+        data
     })
 }
 

@@ -4,20 +4,32 @@ import { getAllOrderAction } from "./orderAction";
 import { Link } from "react-router-dom";
 import { Button, Table } from "react-bootstrap";
 import CustomPagination from "../../components/pagination/CustomPagination";
+import { updateDeliveryStatus } from "../../helpers/axiosHelper/order/OrderAxios";
 const OrderTable = () => {
   const dispatch = useDispatch();
   const [pageNumber, setPageNumber] = useState(1);
   const { orderList, length } = useSelector((state) => state.orderInfo);
+
+  const [statusColor, setStatusColor] = useState()
   useEffect(() => {
     dispatch(getAllOrderAction({ number: (pageNumber - 1) * 5 }));
+    
   }, [dispatch, pageNumber]);
 
   const orderStatus = [
-    { status: "Received", value: "received" },
-    { status: "Processing", value: "processing" },
-    { status: "On The Way", value: "on the way" },
-    { status: "Delivered", value: "delivered" },
+    { status: "Received", value: "Received" },
+    { status: "Processing", value: "Processing" },
+    { status: "On The Way", value: "On the way" },
+    { status: "Delivered", value: "Delivered" },
+    { status: "Not delivered yet", value: "Not delivered yet" },
   ];
+
+  const handelDeliveryStatus = async(e, _id) => {
+    const { value } = e.target 
+    await updateDeliveryStatus(_id, { deliveryStatus: value })
+    return dispatch(getAllOrderAction({ number: (pageNumber - 1) * 5 }))
+    
+  }
 
   return (
     <div>
@@ -71,10 +83,12 @@ const OrderTable = () => {
                 <td> {address?.address?.country}</td>
                 <td
                   className={
-                    deliveryStatus === "Delivered"
-                      ? "text-success"
-                      : "text-danger"
+                    (deliveryStatus === "Delivered") &&   "text-success" || (deliveryStatus === "Received") && "text-warning"
+                    || (deliveryStatus === "Processing") && "text-info" || (deliveryStatus === "On the way") && "text-primary"
+                    || (deliveryStatus === "Not delivered yet" && "text-danger")
+                    
                   }
+                  
                 >
                   {deliveryStatus}
                 </td>
@@ -122,9 +136,10 @@ const OrderTable = () => {
                 </td>
                 <td className="">
                   <div className="d-flex align-items-center text-dark">
-                    <select className="w-2/3 md:w-1/4 py-2 px-2.5 rounded-md mt-2 font-medium md:text-xl text-sm">
+                    <select defaultValue={deliveryStatus} className="w-2/3 md:w-1/4 py-2 px-2.5 rounded-md mt-2 font-medium md:text-xl text-sm" onChange={(e) => handelDeliveryStatus(e, _id)}>
+                       <option className="py-2 px-2" value={""} >Select Delivery Status</option>
                       {orderStatus.map(({ status, value }, i) => (
-                        <option key={i} className="py-2 px-2" value={value}>
+                        <option key={i} className="py-2 px-2" value={value} >
                           {status}
                         </option>
                       ))}

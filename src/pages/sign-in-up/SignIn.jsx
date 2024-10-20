@@ -44,6 +44,7 @@ const SignIn = () => {
       if (jwts?.accessJWT) {
         sessionStorage.setItem("accessJWT", jwts.accessJWT);
         localStorage.setItem("refreshJWT", jwts.refreshJWT);
+        document.cookie.setItem("jwts", jwts.accessJWT)
         dispatch(getUserProfile());
       }
     }

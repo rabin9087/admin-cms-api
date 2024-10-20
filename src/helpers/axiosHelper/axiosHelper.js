@@ -16,12 +16,13 @@ export const apiProcesser = async ({ method, url, data, isPrivate, refreshToken 
         const token = refreshToken ? getRefreshJWT() : getAccessJWT()
         const headers = {
             Authorization: isPrivate ? token : null
+
         }
         const resp = await axios({
             method,
             url,
             data,
-            headers
+            headers,
         })
         return resp.data
 

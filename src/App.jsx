@@ -24,6 +24,7 @@ import { fetchAllCustomersAction } from "./pages/customer/customerAction";
 import EditCategory from "./pages/category/EditCategory";
 
 function App() {
+  console.log(document.cookie)
   const dispatch = useDispatch();
 
   useEffect(() => {

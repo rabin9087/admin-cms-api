@@ -3,7 +3,6 @@ import { apiProcesser, rootAPI } from "../axiosHelper";
 const orderAPI = rootAPI + '/orders';
 
 export const fetchAllOrders = (data) => {
-    console.log(data)
     return apiProcesser({
         method: 'get',
         url: typeof (data) === "string" ? orderAPI + "/" + data : orderAPI + "/skip/" + data?.number,
